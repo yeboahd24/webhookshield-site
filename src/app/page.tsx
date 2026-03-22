@@ -7,7 +7,8 @@ import {
   Clock,
   BarChart3,
   ArrowRight,
-  ChevronRight,
+  X,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -21,14 +22,17 @@ export default function LandingPage() {
             <span className="text-xl font-bold">WebhookShield</span>
           </div>
           <div className="hidden items-center gap-8 md:flex">
+            <a href="#problem" className="text-sm text-muted-foreground hover:text-foreground">
+              Why
+            </a>
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground">
               Features
             </a>
-            <a href="#providers" className="text-sm text-muted-foreground hover:text-foreground">
-              Providers
-            </a>
             <a href="#how-it-works" className="text-sm text-muted-foreground hover:text-foreground">
               How It Works
+            </a>
+            <a href="#compare" className="text-sm text-muted-foreground hover:text-foreground">
+              Compare
             </a>
             <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground">
               Pricing
@@ -38,7 +42,7 @@ export default function LandingPage() {
             href="#get-started"
             className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent/90"
           >
-            Get Started
+            Send Your First Webhook
           </a>
         </div>
       </nav>
@@ -52,21 +56,21 @@ export default function LandingPage() {
             <span className="text-muted-foreground">Built for Ghana&apos;s developer ecosystem</span>
           </div>
           <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl md:leading-[1.1]">
-            Stop losing webhooks.
+            Never lose a
             <br />
-            <span className="text-accent">Start trusting them.</span>
+            <span className="text-accent">webhook again.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            WebhookShield is the reliability and trust layer between webhook senders and your
-            application. Signature verification, replay prevention, guaranteed delivery with
-            automatic retries — for MTN MoMo, Hubtel, Paystack, and any webhook provider.
+            Guaranteed delivery, automatic retries, and cryptographic verification
+            for your webhooks. Drop-in reliability layer for MTN MoMo, Hubtel, Paystack,
+            and any webhook provider.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#get-started"
               className="flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-medium text-accent-foreground hover:bg-accent/90"
             >
-              Get Started Free
+              Send a reliable webhook in 2 minutes
               <ArrowRight className="size-4" />
             </a>
             <a
@@ -80,38 +84,43 @@ export default function LandingPage() {
       </section>
 
       {/* Problem */}
-      <section className="border-y border-border bg-muted/50 px-6 py-20">
+      <section id="problem" className="border-y border-border bg-muted/50 px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold">The problem every Ghanaian developer faces</h2>
+            <h2 className="text-3xl font-bold">When webhooks fail, everything breaks</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              You integrate MoMo, Hubtel, or Paystack webhooks. Then things go wrong.
+              Webhooks fail silently — and your system pays the price.
             </p>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                title: "Silent failures",
-                desc: "Your server was down for 2 minutes. MoMo sent a payment notification. You never got it. The customer paid but your system doesn't know.",
+                icon: AlertTriangle,
+                title: "Payments vanish",
+                desc: "Your server was down for 2 minutes. MoMo sent a payment notification. You never got it. The customer paid — your system doesn't know.",
               },
               {
-                title: "Webhook fraud",
-                desc: "Anyone who knows your callback URL can send fake payment confirmations. No standard way to verify the sender.",
+                icon: AlertTriangle,
+                title: "Orders go missing",
+                desc: "A webhook from Hubtel never arrives. The order sits unprocessed. The customer calls support. You have no idea what happened.",
               },
               {
-                title: "Replay attacks",
-                desc: "A valid webhook is intercepted and replayed 10 times. Your system processes the same payment notification 10 times.",
+                icon: AlertTriangle,
+                title: "Duplicates pile up",
+                desc: "A valid webhook is replayed 10 times. Your system processes the same payment 10 times. Refunds, angry customers, manual cleanup.",
               },
               {
-                title: "No audit trail",
-                desc: "When something goes wrong, you have no record of what was received, when, or whether it was processed.",
+                icon: AlertTriangle,
+                title: "Debugging takes hours",
+                desc: "Something went wrong. Was the webhook sent? Did it arrive? Was the signature valid? No logs, no trail, no answers.",
               },
             ].map((item) => (
               <div
                 key={item.title}
                 className="rounded-xl border border-border bg-background p-6"
               >
-                <h3 className="font-semibold text-foreground">{item.title}</h3>
+                <item.icon className="size-5 text-red-500" />
+                <h3 className="mt-3 font-semibold text-foreground">{item.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{item.desc}</p>
               </div>
             ))}
@@ -119,50 +128,104 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Architecture Diagram */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold">Where WebhookShield sits</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              A single reliability layer between your providers and your app. No code changes on the provider side.
+            </p>
+          </div>
+          <div className="mt-14 flex flex-col items-center gap-0">
+            {/* Providers */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              {["MTN MoMo", "Paystack", "Hubtel", "Any Provider"].map((name) => (
+                <div
+                  key={name}
+                  className="rounded-lg border border-border bg-muted px-5 py-3 text-sm font-medium"
+                >
+                  {name}
+                </div>
+              ))}
+            </div>
+            {/* Arrow down */}
+            <div className="flex flex-col items-center py-3">
+              <div className="h-8 w-px bg-accent" />
+              <div className="size-0 border-x-[6px] border-t-[8px] border-x-transparent border-t-accent" />
+            </div>
+            {/* WebhookShield */}
+            <div className="w-full max-w-md rounded-xl border-2 border-accent bg-accent/5 p-6 text-center">
+              <div className="flex items-center justify-center gap-2">
+                <Shield className="size-6 text-accent" />
+                <span className="text-xl font-bold text-accent">WebhookShield</span>
+              </div>
+              <div className="mt-3 flex flex-wrap justify-center gap-2 text-xs text-muted-foreground">
+                <span className="rounded-full bg-accent/10 px-2.5 py-1">Verify</span>
+                <span className="rounded-full bg-accent/10 px-2.5 py-1">Deduplicate</span>
+                <span className="rounded-full bg-accent/10 px-2.5 py-1">Queue</span>
+                <span className="rounded-full bg-accent/10 px-2.5 py-1">Retry</span>
+                <span className="rounded-full bg-accent/10 px-2.5 py-1">Log</span>
+              </div>
+            </div>
+            {/* Arrow down */}
+            <div className="flex flex-col items-center py-3">
+              <div className="h-8 w-px bg-accent" />
+              <div className="size-0 border-x-[6px] border-t-[8px] border-x-transparent border-t-accent" />
+            </div>
+            {/* Your App */}
+            <div className="rounded-xl border-2 border-green-500/50 bg-green-500/5 px-10 py-4 text-center">
+              <span className="text-lg font-bold text-green-600">Your App</span>
+              <p className="mt-1 text-xs text-muted-foreground">Verified, reliable, deduplicated webhooks</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features */}
-      <section id="features" className="px-6 py-20">
+      <section id="features" className="border-y border-border bg-muted/50 px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold">Everything you need for webhook reliability</h2>
+            <h2 className="text-3xl font-bold">Built for webhooks that can&apos;t afford to fail</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Drop WebhookShield between your webhook senders and your application. Get instant
-              trust, reliability, and visibility.
+              Not &quot;secure&quot;. Not &quot;reliable&quot;. Not &quot;fast&quot;.
+              Here&apos;s exactly what WebhookShield does.
             </p>
           </div>
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 icon: Lock,
-                title: "Signature Verification",
+                title: "Signed webhooks with replay attack protection",
                 desc: "Every webhook is cryptographically verified. HMAC-SHA256 for standard providers, adapter-specific verification for MoMo, Hubtel, and Paystack.",
               },
               {
                 icon: Shield,
-                title: "Replay Prevention",
+                title: "Idempotent event handling",
                 desc: "Each webhook ID is tracked in Redis. Duplicates are rejected within a configurable time window. No more double-processing payments.",
               },
               {
                 icon: Clock,
-                title: "Freshness Validation",
+                title: "Freshness validation with configurable windows",
                 desc: "Stale webhooks are rejected. Configurable tolerance window (default 5 minutes) prevents old webhooks from being replayed.",
               },
               {
                 icon: RefreshCw,
-                title: "Guaranteed Delivery",
+                title: "Automatic retries with exponential backoff",
                 desc: "If your server is down, webhooks are queued in RabbitMQ and retried with exponential backoff. Up to 5 attempts before dead-lettering.",
               },
               {
                 icon: BarChart3,
-                title: "Full Audit Trail",
+                title: "Event logs with full replay capability",
                 desc: "Every webhook is logged with its payload, headers, delivery attempts, and status. See exactly what happened and when.",
               },
               {
                 icon: Zap,
-                title: "Manual Replay",
-                desc: "Failed or dead-lettered webhooks can be replayed with a single click from the dashboard or API call.",
+                title: "One-click replay for failed deliveries",
+                desc: "Failed or dead-lettered webhooks can be replayed with a single click from the dashboard or API call. No data loss, ever.",
               },
             ].map((feature) => (
-              <div key={feature.title} className="rounded-xl border border-border p-6">
+              <div key={feature.title} className="rounded-xl border border-border bg-background p-6">
                 <div className="flex size-10 items-center justify-center rounded-lg bg-accent/10">
                   <feature.icon className="size-5 text-accent" />
                 </div>
@@ -175,7 +238,7 @@ export default function LandingPage() {
       </section>
 
       {/* Providers */}
-      <section id="providers" className="border-y border-border bg-muted/50 px-6 py-20">
+      <section id="providers" className="px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold">Works with your existing providers</h2>
@@ -223,7 +286,7 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section id="how-it-works" className="px-6 py-20">
+      <section id="how-it-works" className="border-y border-border bg-muted/50 px-6 py-20">
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold">How it works</h2>
@@ -249,7 +312,7 @@ export default function LandingPage() {
                 desc: "WebhookShield delivers the webhook to your application, re-signed with your receiver secret. Failed deliveries are retried automatically.",
               },
             ].map((step) => (
-              <div key={step.step} className="relative rounded-xl border border-border p-6">
+              <div key={step.step} className="relative rounded-xl border border-border bg-background p-6">
                 <span className="text-4xl font-bold text-accent/20">{step.step}</span>
                 <h3 className="mt-2 text-lg font-semibold">{step.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{step.desc}</p>
@@ -260,12 +323,12 @@ export default function LandingPage() {
       </section>
 
       {/* Code example */}
-      <section className="border-y border-border bg-muted/50 px-6 py-20">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
-            <h2 className="text-3xl font-bold">Simple to integrate</h2>
+            <h2 className="text-3xl font-bold">Integrate in minutes, not days</h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Register a receiver, create a sender, and start receiving verified webhooks.
+              A simple REST API. Register a receiver, create a sender, and start receiving verified webhooks.
             </p>
           </div>
           <div className="mt-10 overflow-hidden rounded-xl border border-border bg-[#0a0a0a] text-sm">
@@ -302,6 +365,107 @@ curl -X POST http://localhost:8080/api/v1/senders \\
 # Done! Webhooks are now verified, logged, and reliably delivered.`}</code>
             </pre>
           </div>
+
+          {/* Inline Go snippet */}
+          <div className="mt-6 overflow-hidden rounded-xl border border-border bg-[#0a0a0a] text-sm">
+            <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+              <div className="size-3 rounded-full bg-red-500/80" />
+              <div className="size-3 rounded-full bg-yellow-500/80" />
+              <div className="size-3 rounded-full bg-green-500/80" />
+              <span className="ml-2 text-xs text-white/40">handler.go — receiving verified webhooks</span>
+            </div>
+            <pre className="overflow-x-auto p-6 font-mono text-[13px] leading-relaxed text-blue-400">
+              <code>{`func HandleWebhook(w http.ResponseWriter, r *http.Request) {
+    // WebhookShield re-signs with your receiver secret
+    signature := r.Header.Get("X-WebhookShield-Signature")
+    if !webhookshield.Verify(signature, r.Body, receiverSecret) {
+        http.Error(w, "invalid signature", http.StatusUnauthorized)
+        return
+    }
+
+    // Safe to process — verified, deduplicated, fresh
+    processPaymentNotification(r.Body)
+    w.WriteHeader(http.StatusOK)
+}`}</code>
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison */}
+      <section id="compare" className="border-y border-border bg-muted/50 px-6 py-20">
+        <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold">Why not just use provider webhooks directly?</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Provider webhooks work — until they don&apos;t. Here&apos;s what you&apos;re missing.
+            </p>
+          </div>
+          <div className="mt-12 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="py-4 pr-4 text-left font-semibold"></th>
+                  <th className="px-4 py-4 text-center font-semibold text-muted-foreground">
+                    Direct from Provider
+                  </th>
+                  <th className="px-4 py-4 text-center font-semibold text-accent">
+                    With WebhookShield
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    feature: "Retry guarantees",
+                    without: "Varies by provider, often limited or unclear",
+                    with: "Guaranteed retries with exponential backoff",
+                  },
+                  {
+                    feature: "Replay attack protection",
+                    without: "Not provided",
+                    with: "Automatic deduplication via Redis",
+                  },
+                  {
+                    feature: "Debugging failed webhooks",
+                    without: "Check provider dashboard (if available)",
+                    with: "Full event log with payload, headers, and status",
+                  },
+                  {
+                    feature: "Signature verification",
+                    without: "Different per provider, easy to get wrong",
+                    with: "Standardized — handled automatically per provider",
+                  },
+                  {
+                    feature: "Replay failed events",
+                    without: "Not possible",
+                    with: "One-click replay from dashboard or API",
+                  },
+                  {
+                    feature: "Consistent format",
+                    without: "Every provider is different",
+                    with: "Unified, re-signed delivery to your app",
+                  },
+                ].map((row) => (
+                  <tr key={row.feature} className="border-b border-border">
+                    <td className="py-4 pr-4 font-medium">{row.feature}</td>
+                    <td className="px-4 py-4 text-center text-muted-foreground">
+                      <div className="flex items-center justify-center gap-2">
+                        <X className="size-4 text-red-400" />
+                        <span>{row.without}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <CheckCircle className="size-4 text-green-500" />
+                        <span>{row.with}</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -329,7 +493,7 @@ curl -X POST http://localhost:8080/api/v1/senders \\
                   "All provider adapters",
                   "Community support",
                 ],
-                cta: "Get Started Free",
+                cta: "Start for Free",
                 ctaHref: "#get-started",
                 highlight: false,
               },
@@ -440,10 +604,10 @@ curl -X POST http://localhost:8080/api/v1/senders \\
       <section id="get-started" className="border-t border-border bg-primary px-6 py-20">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-primary-foreground">
-            Ready to stop losing webhooks?
+            Send your first reliable webhook in 2 minutes
           </h2>
           <p className="mt-4 text-lg text-primary-foreground/70">
-            Get started in under 5 minutes with Docker Compose. Or join the waitlist for our managed
+            Get started with Docker Compose. Or join the waitlist for our managed
             cloud offering.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -451,7 +615,7 @@ curl -X POST http://localhost:8080/api/v1/senders \\
               href="#pricing"
               className="flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-medium text-accent-foreground hover:bg-accent/90"
             >
-              Start Free Trial
+              Test Webhook Delivery Now
               <ArrowRight className="size-4" />
             </a>
             <a
